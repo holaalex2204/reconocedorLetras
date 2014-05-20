@@ -170,19 +170,39 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     public String reconoce()
     {
         double[][] ar = new double[_bufImage.getHeight()][_bufImage.getWidth()];
-        double[] momentos = new double[8];
+        double[] momentos = new double[64];        
+        int pos = 0 ;
+        double clas[] = new double[448];
         for(int fila = 0 ; fila< _bufImage.getHeight(); fila ++)
-        {            
-            for (int col = 0; col < _bufImage.getWidth(); col++) {                
+        {
+            for (int col = 0; col < _bufImage.getWidth(); col++) {
                 ar[fila][col] = _bufImage.getRGB(col, fila);
             }
         }
         for(int i = 1 ; i<=7;i++)
-        {            
-            momentos[i] =Moments.getHuMoment(ar, i);
-            System.out.println(momentos[i]);
+        {
+            momentos[(i-1)] =Moments.getHuMoment(ar, i);
+            System.out.println(momentos[(i-1)]);
+            double[] aux = new double[64];
+            aux = ReconocedorLetras.BitFromDouble(momentos[(i-1)]);
+            for(double bit : aux)
+            {
+                clas[pos] = bit;
+                pos++;
+            }            
         }        
-        int carac = ReconocedorLetras.getDecimalNumber(ReconocedorLetras.n.computeOutputs(momentos));        
+        String cad = "{";
+        for(double bit : clas)
+        {            
+            if(bit==0)
+                cad = cad.concat("0,");            
+            else
+                cad = cad.concat("1,");            
+        }        
+        cad = cad.substring(0, (cad.length()-1));
+        cad = cad.concat("}");
+        System.out.println(cad);
+        int carac = ReconocedorLetras.getDecimalNumber(ReconocedorLetras.n.computeOutputs(clas));
         System.out.println(carac);
         return "Hola";        
     }
