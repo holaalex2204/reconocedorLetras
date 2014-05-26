@@ -205,12 +205,13 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
         System.out.println(cad);
         int carac = ReconocedorLetras.getDecimalNumber(ReconocedorLetras.n.computeOutputs(clas));
         System.out.println(carac);
-        if(carac ==65){
-           JOptionPane.showMessageDialog(null, "La letra es A" );
+        JOptionPane.showMessageDialog(null, carac );
+        /*if(carac ==65){
+           JOptionPane.showMessageDialog(null, carac );
         } else {
             JOptionPane.showMessageDialog(null, "La letra es E" );
         }
-        
+        */
         return "Hola";        
     }
 }

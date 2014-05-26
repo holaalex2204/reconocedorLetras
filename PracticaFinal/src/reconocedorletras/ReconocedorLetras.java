@@ -21,8 +21,8 @@ public class ReconocedorLetras {
     protected final static int NUM_INPUT = 448;
     protected final static int NUM_OUTPUT = 7;
     protected final static int NUM_HIDDEN = 7;
-    protected final static double RATE = 0.5;
-    protected final static double MOMENTUM = 0.7;
+    protected final static double RATE = 0.20;
+    protected final static double MOMENTUM = 0.9;
 
     protected static double[] BitFromDouble(Double d) {
         byte[] output = new byte[8];
@@ -80,7 +80,7 @@ public class ReconocedorLetras {
         double xorData[][] = getGrid();
         double xorIdeal[][] = getIdeal();
         int update = 0;
-        int max = 1000;
+        int max = 10000;
         double temp[];
         for (int i = 0; i < max; i++) {
             for (int j = 0; j < xorData.length; j++) {
