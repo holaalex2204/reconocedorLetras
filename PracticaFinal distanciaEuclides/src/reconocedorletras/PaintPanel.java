@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 public class PaintPanel extends JPanel implements MouseListener, MouseMotionListener {
 
     //================================================================ constants
-    private static final int SIZE = 300;     // Size of paint area.    
+    private static final int SIZE = 100;     // Size of paint area.    
     private static final Color INITIAL_COLOR = Color.BLACK;
     private static final Color COLOR_BACKGROUND = Color.WHITE;
 
@@ -115,7 +115,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
         //    context for the BufferedImage.
 
         g2.setColor(_color);    // Set the color.
-        g2.setStroke(new BasicStroke(10));
+        g2.setStroke(new BasicStroke(6));
         g2.drawLine(_start.x, _start.y, _end.x, _end.y);
         _start.x = _end.x;
         _start.y = _end.y;
@@ -172,9 +172,9 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     {
         double cadena[] = getCadenaPatron();
         double resultado[] = new double[1];        
-
-        DatosEntrenamiento.n.computeOutputs(cadena);        
-        System.out.println(resultado[0]);
+        System.out.println(cadena.length);        
+        resultado = DatosEntrenamiento.n.computeOutputs(cadena);        
+        System.out.println("El resultado es " + DatosEntrenamiento.getDecimalNumber(resultado));
         /*if(carac ==65){
            JOptionPane.showMessageDialog(null, carac );
         } else {
@@ -199,8 +199,9 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     public void aprender(char a)
     {
         double cadena[] = getCadenaPatron();
-        double resultado[] = new double[1];
-        resultado[0] = (int)a;
+        double[] resultado = DatosEntrenamiento.getBinaryNumber(((int)a));
+        System.out.println("El tamaño de la cadena de patron es " +  cadena.length);
+        System.out.println("El tamaño de la cadena de resultado es " +  resultado.length);
         DatosEntrenamiento.addPatron(new Patron(cadena,resultado));
     }
 }

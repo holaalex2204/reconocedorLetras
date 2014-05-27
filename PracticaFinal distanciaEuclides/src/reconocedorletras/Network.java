@@ -153,21 +153,16 @@ public class Network {
      * @return The results from the output neurons.
      */
     public double[] computeOutputs(double input[]) {
-        try{
-        
-            System.out.println("asdf");
-            int i, j;
-        final Integer hiddenIndex = inputCount;
-            System.out.println("asdf");
-        final Integer outIndex = inputCount + hiddenCount;
-            System.out.println("hola");
+                
+            
+        int i, j;
+        final Integer hiddenIndex = inputCount;        
+        final Integer outIndex = inputCount + hiddenCount;        
         for (i = 0; i < inputCount; i++) {
             fire[i] = input[i];
-        }
-        System.out.println("hola 2");
+        }        
         // first layer
         int inx = 0;
-
         for (i = hiddenIndex; i < outIndex; i++) {
             double sum = thresholds[i];
 
@@ -176,7 +171,7 @@ public class Network {
             }
             fire[i] = threshold(sum);
         }
-        System.out.println("hola 3");
+        
 
         // hidden layer
 
@@ -190,15 +185,8 @@ public class Network {
             }
             fire[i] = threshold(sum);
             result[i - outIndex] = fire[i];
-        }
-        System.out.println("hola 4");
+        }        
         return result;
-        }
-        catch(Exception ev)
-        {
-            ev.printStackTrace();
-        }
-        return null;
     }
 
     /**

@@ -63,7 +63,8 @@ public class PaintDemo extends JApplet {
         buttonPanel.add(limpiar);
         buttonPanel.add(agregarPatron);
         buttonPanel.add(entrenar);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new GridLayout(0,1));
+//buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(shapePanel);
         buttonPanel.add(colorPanel);
         buttonPanel.add(Box.createHorizontalGlue());        

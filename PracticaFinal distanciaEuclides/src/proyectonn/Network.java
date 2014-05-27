@@ -167,8 +167,8 @@ public class Network {
   * @param input La entrada que se da a la red neuronal.
   * @return Resultados de las neuronas de salida.
   */
- public double []computeOutputs(double input[]) {
-  int i, j;
+ public double[] computeOutputs(double input[]) {     
+     int i, j;
   final int hiddenIndex = entradaCuenta;
   final int outIndex = entradaCuenta + ocultoCuenta;
 
