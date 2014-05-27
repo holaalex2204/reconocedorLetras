@@ -18,11 +18,11 @@ public class ReconocedorLetras {
      * @param args the command line arguments
      */
     public static Network n[];
-    protected final static int NUM_INPUT = 7;
+    protected final static int NUM_INPUT = 186624;
     protected final static int NUM_OUTPUT = 1;
     protected final static int NUM_HIDDEN = 15;
-    protected final static double RATE = 10.70;
-    protected final static double MOMENTUM = 0.0000000000000000005;
+    protected final static double RATE = 0.70;
+    protected final static double MOMENTUM = .5;
 
     protected static double[] BitFromDouble(Double d) {
         byte[] output = new byte[8];
@@ -75,7 +75,7 @@ public class ReconocedorLetras {
         }
         return res;
     }
-
+    
     protected static void train(int num ) {
         double xorData[][] = getGrid(num);
         double xorIdeal[][] = getIdeal(num);
@@ -105,7 +105,7 @@ public class ReconocedorLetras {
     }
    public void menu(){
        JApplet theApplet = new PaintDemo();
-        n = new Network[5];
+        /*n = new Network[5];
         for(int i = 0 ; i< 5 ;i++)
         {
             n[i] = new Network(
@@ -114,9 +114,9 @@ public class ReconocedorLetras {
                 NUM_OUTPUT,
                 RATE,
                 MOMENTUM);
-            train(i);    
+            train(i);
         }
-        
+        */
         //... Create a window (JFrame) and make applet the content pane.
         JFrame window = new JFrame();
         window.setContentPane(theApplet);

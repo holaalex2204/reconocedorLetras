@@ -13,6 +13,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -34,6 +35,22 @@ public class PaintDemo extends JApplet {
                 System.out.println(_canvas.reconoce());
             }
         });
+        JButton entrenar = new JButton("Comenzar a entrenar!!");
+        entrenar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DatosEntrenamiento.train();
+            }
+        });
+        JButton agregarPatron = new JButton("Agregar Patron ");
+        agregarPatron.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = JOptionPane.showInputDialog(null, "Ingresa la letra que escribiste:", 
+"Proyecto de Redes Neuronales", 1);
+                _canvas.aprender(str.charAt(0));
+            }            
+        });
         JButton limpiar = new JButton("Limpiar");
         limpiar.addActionListener(new ActionListener() {
 
@@ -44,7 +61,8 @@ public class PaintDemo extends JApplet {
         });
         buttonPanel.add(aceptar);
         buttonPanel.add(limpiar);
-        
+        buttonPanel.add(agregarPatron);
+        buttonPanel.add(entrenar);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(shapePanel);
         buttonPanel.add(colorPanel);

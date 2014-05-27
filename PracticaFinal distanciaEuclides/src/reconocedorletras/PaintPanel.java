@@ -170,40 +170,11 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     }
     public String reconoce()
     {
-        double[][] ar = new double[_bufImage.getHeight()][_bufImage.getWidth()];
-        double[] momentos = new double[64];        
-        int pos = 0 ;
-        double clas[] = new double[448];
-        for(int fila = 0 ; fila< _bufImage.getHeight(); fila ++)
-        {
-            for (int col = 0; col < _bufImage.getWidth(); col++) {
-                ar[fila][col] = _bufImage.getRGB(col, fila);
-            }
-        }
-        String cad = "{";
-        for(int i = 1 ; i<=7;i++)
-        {
-            momentos[(i-1)] =Moments.getHuMoment(ar, i);
-            cad = cad.concat(momentos[(i-1)] + ",");            
-            double[] aux = new double[64];
-            aux = ReconocedorLetras.BitFromDouble(momentos[(i-1)]);
-            for(double bit : aux)
-            {
-                clas[pos] = bit;
-                pos++;
-            }            
-        }           
-        cad = cad.substring(0, (cad.length()-1));
-        cad = cad.concat("}");
-        int sal = 0;
-        System.out.println(cad);
-        for(int i = 0  ; i<5 ; i++)
-        {
-            int carac =(int)Math.round((ReconocedorLetras.n[i].computeOutputs(clas))[0]);    
-            System.out.println(i + " ---> "  + carac);
-            if(carac == 1 )     sal = i;
-        }        
-        JOptionPane.showMessageDialog(null, sal );
+        double cadena[] = getCadenaPatron();
+        double resultado[] = new double[1];        
+
+        DatosEntrenamiento.n.computeOutputs(cadena);        
+        System.out.println(resultado[0]);
         /*if(carac ==65){
            JOptionPane.showMessageDialog(null, carac );
         } else {
@@ -211,5 +182,25 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
         }
         */
         return "Hola";        
+    }
+    private double[] getCadenaPatron()
+    {
+        double cadenaPatron[] = new double[_bufImage.getHeight()*_bufImage.getWidth()];
+        int pos =0;
+        System.out.println(_bufImage.getWidth()*_bufImage.getWidth());
+        for(int fila = 0 ; fila< _bufImage.getHeight(); fila ++)
+        {
+            for (int col = 0; col < _bufImage.getWidth(); col++) {
+                cadenaPatron[pos] = _bufImage.getRGB(col, fila);
+            }
+        }
+        return cadenaPatron;
+    }
+    public void aprender(char a)
+    {
+        double cadena[] = getCadenaPatron();
+        double resultado[] = new double[1];
+        resultado[0] = (int)a;
+        DatosEntrenamiento.addPatron(new Patron(cadena,resultado));
     }
 }
