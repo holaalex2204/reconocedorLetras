@@ -27,11 +27,10 @@ public class PaintDemo extends JApplet {
         JPanel shapePanel = new JPanel();        
         JPanel colorPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
-        JButton aceptar = new JButton("Aceptar");
+        JButton aceptar = new JButton("Reconocer!!!");
         aceptar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Acepte");
+            public void actionPerformed(ActionEvent e) {                
                 System.out.println(_canvas.reconoce());
             }
         });
@@ -46,7 +45,7 @@ public class PaintDemo extends JApplet {
         agregarPatron.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String str = JOptionPane.showInputDialog(null, "Ingresa la letra que escribiste:", 
+                String str = JOptionPane.showInputDialog(null, "Ingresa la letra que acabas de dibujar:", 
 "Proyecto de Redes Neuronales", 1);
                 _canvas.aprender(str.charAt(0));
             }            
@@ -60,7 +59,7 @@ public class PaintDemo extends JApplet {
             }
         });
         buttonPanel.add(aceptar);
-        buttonPanel.add(limpiar);
+        //buttonPanel.add(limpiar);
         buttonPanel.add(agregarPatron);
         buttonPanel.add(entrenar);
         buttonPanel.setLayout(new GridLayout(0,1));

@@ -85,7 +85,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
         Graphics2D g2 = (Graphics2D) g;  // Downcast to Graphics2D
 
         //... One time initialization of in-memory, saved image.
-        if (_bufImage == null | limpia==true) {
+        if (_bufImage == null | limpia == true) {
             //... This is the first time, initialize _bufImage
             int w = this.getWidth();
             int h = this.getHeight();
@@ -157,7 +157,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     }
 
     public void limpiar() {
-        limpia = true;        
+        limpia = true;
     }
 
     //================================================== ignored mouse listeners
@@ -168,40 +168,73 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
     public void setBufImage(BufferedImage _bufImage) {
         this._bufImage = _bufImage;
     }
-    public String reconoce()
-    {
-        double cadena[] = getCadenaPatron();
-        double resultado[] = new double[1];        
-        System.out.println(cadena.length);        
-        resultado = DatosEntrenamiento.n.computeOutputs(cadena);        
-        System.out.println("El resultado es " + DatosEntrenamiento.getDecimalNumber(resultado));
+
+    public String reconoce() {
+        //double cadena[] = getCadenaPatron();
+        double cadena[] = getHuMoments();
+        double resultado[] = new double[1];
+        int asciiLetraReconocida ;
+        System.out.println(cadena.length);
+        resultado = DatosEntrenamiento.n.computeOutputs(cadena);
+        asciiLetraReconocida = DatosEntrenamiento.getDecimalNumber(resultado);
+        System.out.println("El resultado es " + asciiLetraReconocida);
+         JOptionPane.showMessageDialog(null, "La letra reconocida es una " + ((char)asciiLetraReconocida));
         /*if(carac ==65){
-           JOptionPane.showMessageDialog(null, carac );
-        } else {
-            JOptionPane.showMessageDialog(null, "La letra es E" );
-        }
-        */
-        return "Hola";        
+         JOptionPane.showMessageDialog(null, carac );
+         } else {
+         JOptionPane.showMessageDialog(null, "La letra es E" );
+         }
+         */
+        return "";
     }
-    private double[] getCadenaPatron()
-    {
-        double cadenaPatron[] = new double[_bufImage.getHeight()*_bufImage.getWidth()];
-        int pos =0;
-        System.out.println(_bufImage.getWidth()*_bufImage.getWidth());
-        for(int fila = 0 ; fila< _bufImage.getHeight(); fila ++)
-        {
+
+    private double[] getCadenaPatron() {
+        double cadenaPatron[] = new double[_bufImage.getHeight() * _bufImage.getWidth()];        
+        int pos = 0;
+        System.out.println(_bufImage.getWidth() * _bufImage.getWidth());
+        for (int fila = 0; fila < _bufImage.getHeight(); fila++) {
             for (int col = 0; col < _bufImage.getWidth(); col++) {
                 cadenaPatron[pos] = _bufImage.getRGB(col, fila);
             }
         }
         return cadenaPatron;
     }
-    public void aprender(char a)
-    {
-        double cadena[] = getCadenaPatron();
-        double[] resultado = DatosEntrenamiento.getBinaryNumber(((int)a));
-        System.out.println("El tamaño de la cadena de patron es " +  cadena.length);
-        System.out.println("El tamaño de la cadena de resultado es " +  resultado.length);
-        DatosEntrenamiento.addPatron(new Patron(cadena,resultado));
+
+    private double[] getHuMoments() {
+        double momentos[] = new double[7];
+        double[][] ar = new double[_bufImage.getHeight()][_bufImage.getWidth()];
+        double clas[] = new double[448];
+        double[] aux = new double[64];
+        int pos = 0;
+        for (int fila = 0; fila < _bufImage.getHeight(); fila++) {
+            for (int col = 0; col < _bufImage.getWidth(); col++) {
+                ar[fila][col] = _bufImage.getRGB(col, fila);
+                if (ar[fila][col] == -1) {
+                    ar[fila][col] = 0;
+                } else {
+                    ar[fila][col] = 255;
+                }
+                //System.out.println(ar[fila][col]);
+            }
+        }
+        for (int i = 1; i <= 7; i++) {
+
+            momentos[(i - 1)] = Moments.getHuMoment(ar, i);            
+            aux = ReconocedorLetras.BitFromDouble(momentos[(i - 1)]);
+            for (double bit : aux) {
+                clas[pos] = bit;
+                pos++;
+            }
+        }
+        return clas;
+    }
+
+    public void aprender(char a) {
+        //double cadena[] = getCadenaPatron();
+        double cadena[] = getHuMoments();
+        double[] resultado = DatosEntrenamiento.getBinaryNumber(((int) a));
+        System.out.println("El tamaño de la cadena de patron es " + cadena.length);
+        System.out.println("El tamaño de la cadena de resultado es " + resultado.length);
+        DatosEntrenamiento.addPatron(new Patron(cadena, resultado));
     }
 }

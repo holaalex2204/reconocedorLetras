@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class DatosEntrenamiento {
     public static ArrayList<Patron> patrones = new ArrayList<Patron>();
-    protected final static int NUM_INPUT = 15900;
+    protected final static int NUM_INPUT = 448;
     protected final static int NUM_OUTPUT = 7;
-    protected final static int NUM_HIDDEN = 7;
+    protected final static int NUM_HIDDEN = 3;
     protected final static double RATE = 0.5;
     protected final static double MOMENTUM = 0.70;
     public static Network n = new Network(
@@ -99,6 +99,7 @@ public class DatosEntrenamiento {
                     RATE,
                     MOMENTUM);
         }
+        n.reset();
         int max = 3000;
         double error;
         double temp[];
@@ -112,8 +113,8 @@ public class DatosEntrenamiento {
                 }
             }
             error = n.getError(xorData.length);
-
-        }while ( error > 0.1) ;
+            System.out.println("El error es" + error);
+        }while ( error > 0.3) ;
         System.out.println("Resultados de la red ");
         System.out.println("");
         System.out.println("");
